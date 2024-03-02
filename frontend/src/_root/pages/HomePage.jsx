@@ -1,9 +1,9 @@
-import "./App.css";
-import { useState, useEffect } from "react";
-import ArticleList from "./components/ArticleList";
+import React, { useEffect, useState } from "react";
+import ArticleCard from "../../Components/ArticleCard";
 
-function App() {
+const HomePage = () => {
   const [articles, setArticles] = useState([]);
+
   useEffect(() => {
     fetch("http://127.0.0.1:5000/get", {
       method: "GET",
@@ -15,12 +15,15 @@ function App() {
       .then((response) => setArticles(response))
       .catch((error) => console.log(error));
   }, []);
+
   return (
     <div className="App">
-      <p className="text-lg text-orange-600">Hello World!</p>
-      <ArticleList articles= {articles} />
+      <p className="text-lg font-semibold text-orange-600">Near Locations: </p>
+      {articles.map((article) => (
+        <ArticleCard key={article.id} articleItem={article} />
+      ))}
     </div>
   );
-}
+};
 
-export default App;
+export default HomePage;
